@@ -1,0 +1,166 @@
+<?php
+/**
+ * ecrre un cript qui genere un mois un jour un mois et uen annee
+ * puis determine et affiche la date suivante et date precedante
+ */
+define("min_mois",1);
+define("max_mois",20);
+define("min_an",1800);
+define("max_an",2021);
+define("min_jour",1);
+define("max_jour",50);
+$jour=rand(min_jour,max_jour);
+$an=rand(min_an,max_an);
+$mois=rand(min_mois,max_mois);
+$valide=true;
+if($mois==1 || $mois==3 || $mois==5 || $mois==7 || $mois==8 || $mois==10 || $mois==12){
+    if($jour<=31){
+        $jour_P=$jour-1;
+        $mois_P=$mois;
+        $an_P=$an;
+        if($jour==31){
+            $jour_S=1;
+            $mois_S=$mois+1;
+            $an_S=$an;
+        }
+        elseif($jour==1){
+            $jour_P=30;
+            $mois_P=$mois-1;
+        }
+        else{
+            $jour_S=$jour+1;
+            $mois_S=$mois;
+            $an_S=$an;
+        }
+        
+        if($mois==1){
+            if($jour==1){
+                $jour_P=31;
+                $mois_P=12;
+                $an_P=$an-1;
+            }
+        }
+        elseif($mois==3){
+            if($jour==1){
+                if(($an%100==0 && $an%400==0)||($an%100!=0 && $an%4==0)){
+                    $jour_P=29;
+                }
+                else{
+                    $jour_P=28;
+                }
+                $mois_P=$mois-1;
+            }
+        }
+        elseif($mois==8){
+            if($jour==1){
+                $jour_P=31;
+                $mois_P=$mois-1;
+            }
+        }
+        elseif($mois==12){
+            if($jour==31){
+                $mois_S=1;
+                $an_S=$an+1;
+            }
+        }
+    }
+    else{
+        $valide=false;
+    }
+}
+elseif($mois==4 && $mois==6 && $mois==9 && $mois==11){
+    if($jour<=30){
+        $jour_P=$jour-1;
+        $mois_P=$mois;
+        $an_P=$an;
+        if($jour==30){
+            $jour_S=1;
+            $mois_S=$mois+1;
+            $an_S=$an;
+        }
+        elseif($jour==1){
+            $jour_P=31;
+            $mois_P=$mois-1;
+        }
+        else{
+            $jour_S=$jour+1;
+            $mois_S=$mois;
+            $an_S=$an;
+        }
+    }
+    else{
+        $valide=false;
+    }
+}
+elseif($mois==2){
+    if($jour==1){
+        $jour_P=1;
+        $mois_P=$mois-1;
+        $an_P=$an;
+        $jour_S=$jour+1;
+        $mois_S=$mois;
+        $an_S=$an;
+    }
+    else{
+        if(($an%100==0 && $an%400==0)||($an%100!=0 && $an%4==0)){
+            if($jour<=29){
+                if($jour==29){
+                    $jour_P=$jour-1;
+                    $mois_P=$mois;
+                    $an_P=$an;
+                    $jour_S=1;
+                    $mois_S=$mois+1;
+                    $an_S=$an;
+                }
+                else{
+                    $jour_P=$jour-1;
+                    $mois_P=$mois;
+                    $an_P=$an;
+                    $jour_S=$jour+1;
+                    $mois_S=$mois;
+                    $an_S=$an;
+                }
+            }
+            else{
+                $valide=false;
+            }
+        }
+        else{
+            if($jour<=28){
+                if($jour==28){
+                    $jour_P=$jour-1;
+                    $mois_P=$mois;
+                    $an_P=$an;
+                    $jour_S=1;
+                    $mois_S=$mois+1;
+                    $an_S=$an;
+                }
+                else{
+                    $jour_P=$jour-1;
+                    $mois_P=$mois;
+                    $an_P=$an;
+                    $jour_S=$jour+1;
+                    $mois_S=$mois;
+                    $an_S=$an;
+                }
+            }
+            else{
+                $valide=false;
+            }
+        }
+    }
+}
+else{
+    $valide=false;
+}
+
+if($valide==false){
+    echo("la date $jour/$mois/$an n'est pas valide");
+}
+else{
+    echo("la date : $jour/$mois/$an <br>
+    la date  précédante : $jour_P/$mois_P/$an_P<br>
+    la date  suivante : $jour_S/$mois_S/$an_S");
+}
+
+?>
